@@ -63,8 +63,7 @@ heavy-chain-only antibodies. Their CDR3 region is the primary determinant of
 antigen binding specificity and is typically longer and more structurally
 diverse than conventional antibody CDR3s.
 
-`abseqr` uses conserved Kabat/IMGT boundary motifs — a cysteine (C) on the
-N-terminal side and a WGXG motif on the C-terminal side — to identify CDR3
+`abseqr` uses conserved Chothia numbering scheme to identify CDR3
 regions without requiring sequence alignment.
 
 ---
