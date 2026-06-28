@@ -5,20 +5,22 @@
     "type": "dcf",
     "hash": "0",
     "contents": "",
-    "dirty": false,
+    "dirty": true,
     "created": 1782629407862.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "cursorPosition": "31,51",
+        "scrollLine": "14"
     },
     "folds": "",
     "lastKnownWriteTime": 1782629035,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1782629035,
+    "last_content_update": 1782630526467,
     "read_only": false,
     "read_only_alternatives": []
 }

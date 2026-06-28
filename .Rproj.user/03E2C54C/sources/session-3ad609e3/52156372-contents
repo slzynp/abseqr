@@ -16,7 +16,7 @@ extracting CDR3 regions and computing per-position amino acid composition.
 
 ```r
 # Install from GitHub (requires devtools)
-devtools::install_github("slazynp/abseqr")
+devtools::install_github("slzynp/abseqr")
 ```
 
 ---

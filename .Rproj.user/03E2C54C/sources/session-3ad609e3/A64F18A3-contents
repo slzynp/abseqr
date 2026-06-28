@@ -3,7 +3,7 @@ Title: Antibody and Nanobody Sequence Analysis Tools
 Version: 0.1.0
 Authors@R: 
     person("Sila Zeynep", "Akyuz", 
-           email = "your@email.com", 
+           email = "slazeynepakyuz@gmail.com", 
            role = c("aut", "cre"))
 Description: A toolkit for parsing, summarising, and visualising antibody and 
     nanobody sequences. Provides functions for reading FASTA files into tidy 
@@ -28,6 +28,6 @@ Suggests:
     ggseqlogo
 Config/testthat/edition: 3
 VignetteBuilder: knitr
-URL: https://github.com/silaakyuz/abseqr
-BugReports: https://github.com/silaakyuz/abseqr/issues
+URL: https://github.com/slzynp/abseqr, https://slzynp.github.io/abseqr/
+BugReports: https://github.com/slzynp/abseqr/issues
 Config/roxygen2/version: 8.0.0
