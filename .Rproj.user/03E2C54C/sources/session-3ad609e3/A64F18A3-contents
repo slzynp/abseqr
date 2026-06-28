@@ -1,0 +1,33 @@
+Package: abseqr
+Title: Antibody and Nanobody Sequence Analysis Tools
+Version: 0.1.0
+Authors@R: 
+    person("Sila Zeynep", "Akyuz", 
+           email = "your@email.com", 
+           role = c("aut", "cre"))
+Description: A toolkit for parsing, summarising, and visualising antibody and 
+    nanobody sequences. Provides functions for reading FASTA files into tidy 
+    data frames, extracting and analysing CDR3 regions, computing amino acid 
+    composition, and producing publication-ready plots. Designed for 
+    reproducible antibody sequence analysis workflows.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Imports:
+    dplyr,
+    ggplot2,
+    scales,
+    stringr,
+    tibble,
+    tidyr,
+    rlang
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    ggseqlogo
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://github.com/silaakyuz/abseqr
+BugReports: https://github.com/silaakyuz/abseqr/issues
+Config/roxygen2/version: 8.0.0

@@ -1,0 +1,151 @@
+---
+title: "Analysing Nanobody CDR3 Sequences with abseqr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analysing Nanobody CDR3 Sequences with abseqr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  fig.width  = 7,
+  fig.height = 4,
+  dpi = 150
+)
+```
+
+## Introduction
+
+Nanobodies are single-domain antibody fragments (VHH) derived from camelid
+heavy-chain-only antibodies. Their complementarity-determining region 3
+(CDR3) is the primary determinant of antigen binding specificity and tends to
+be longer and more structurally diverse than the CDR3 of conventional
+antibodies.
+
+This vignette demonstrates how to use `abseqr` to:
+
+1. Parse a FASTA file of nanobody sequences into a tidy data frame
+2. Extract CDR3 regions using conserved flanking motifs
+3. Summarise and visualise CDR3 length distributions
+4. Compute and visualise per-position amino acid composition
+
+---
+
+## 1. Reading sequences
+
+`read_fasta()` parses any standard FASTA file into a tibble with one row per
+sequence. Multi-line sequences are automatically collapsed.
+
+```{r load}
+library(abseqr)
+
+fasta_file <- system.file("extdata", "example_nanobodies.fasta",
+                           package = "abseqr")
+seqs <- read_fasta(fasta_file)
+seqs
+```
+
+The `length` column gives the total sequence length in residues. Our example
+set contains `r nrow(seqs)` nanobody sequences.
+
+---
+
+## 2. Extracting CDR3 regions
+
+`extract_cdr3()` uses conserved flanking residues to identify CDR3 boundaries.
+For VHH nanobodies, CDR3 is flanked by a conserved **cysteine (C)** at the
+N-terminal end and a **WGXG** motif at the C-terminal end — following the
+Kabat/IMGT convention used in structural databases such as SAbDab.
+
+```{r cdr3}
+seqs <- extract_cdr3(seqs)
+seqs |> dplyr::select(header, cdr3, cdr3_length)
+```
+
+Sequences where no CDR3 could be detected receive `NA`. We can check how
+many were successfully extracted:
+
+```{r cdr3-summary}
+n_total <- nrow(seqs)
+n_found <- sum(!is.na(seqs$cdr3))
+cat(sprintf("CDR3 extracted: %d / %d sequences (%.0f%%)\n",
+            n_found, n_total, 100 * n_found / n_total))
+```
+
+---
+
+## 3. CDR3 length distribution
+
+CDR3 length is a key characteristic of nanobodies. Nanobody CDR3s tend to be
+longer than their conventional antibody counterparts (typically 16–24 residues
+in VHHs vs 10–15 in VH domains), partly because they often form protruding
+loop structures that reach into enzyme active sites.
+
+```{r length-dist, fig.cap="CDR3 length distribution across example nanobodies."}
+cdr3_length_dist(seqs,
+                 subtitle = paste0("n = ", n_found, " nanobodies"))
+```
+
+---
+
+## 4. Per-position amino acid composition
+
+To analyse position-specific amino acid preferences, we first select sequences
+of a single CDR3 length (the most common length in the dataset), then compute
+composition with `aa_composition()`.
+
+```{r most-common-length}
+# Find the most common CDR3 length
+common_len <- seqs |>
+  dplyr::filter(!is.na(cdr3_length)) |>
+  dplyr::count(cdr3_length, sort = TRUE) |>
+  dplyr::slice(1) |>
+  dplyr::pull(cdr3_length)
+
+cat("Most common CDR3 length:", common_len, "residues\n")
+```
+
+```{r composition}
+comp <- aa_composition(seqs, length_filter = common_len)
+comp
+```
+
+`aa_composition_plot()` visualises this as a heatmap where darker cells
+indicate higher frequency at that position.
+
+```{r composition-plot, fig.height=6, fig.cap="Per-position amino acid composition for the most common CDR3 length. Amino acids are grouped by physicochemical property."}
+aa_composition_plot(
+  comp,
+  title = paste0("CDR3 Amino Acid Composition (length = ", common_len, ")")
+)
+```
+
+Position-specific patterns reflect selection pressures on antigen binding:
+positions near the tips of the CDR3 loop tend to show more diversity, while
+positions flanking the conserved cysteines are more constrained.
+
+---
+
+## Summary
+
+| Function | Input | Output |
+|---|---|---|
+| `read_fasta()` | FASTA file path | Tibble: header, sequence, length |
+| `extract_cdr3()` | Tibble or character vector | Adds cdr3, cdr3_length columns |
+| `cdr3_length_dist()` | Tibble with cdr3_length | ggplot bar chart |
+| `aa_composition()` | Tibble with cdr3 | Tibble: position × amino_acid frequencies |
+| `aa_composition_plot()` | aa_composition tibble | ggplot heatmap |
+
+For further analysis, the tidy output of each function is designed to plug
+directly into `dplyr` and `ggplot2` workflows.
+
+---
+
+## Session info
+
+```{r session}
+sessionInfo()
+```

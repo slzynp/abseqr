@@ -1,0 +1,90 @@
+# abseqr <img src="man/figures/logo.png" align="right" height="120" alt="abseqr logo"/>
+
+<!-- badges: start -->
+![R package](https://img.shields.io/badge/R-package-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+<!-- badges: end -->
+
+**abseqr** is a lightweight R package for parsing, summarising, and visualising
+antibody and nanobody sequences. It provides a tidy, pipe-friendly interface
+for common tasks in antibody sequence analysis — from reading FASTA files to
+extracting CDR3 regions and computing per-position amino acid composition.
+
+---
+
+## Installation
+
+```r
+# Install from GitHub (requires devtools)
+devtools::install_github("silaakyuz/abseqr")
+```
+
+---
+
+## Quick start
+
+```r
+library(abseqr)
+
+# 1. Read a FASTA file
+fasta_file <- system.file("extdata", "example_nanobodies.fasta",
+                           package = "abseqr")
+seqs <- read_fasta(fasta_file)
+
+# 2. Extract CDR3 regions
+seqs <- extract_cdr3(seqs)
+
+# 3. Plot CDR3 length distribution
+cdr3_length_dist(seqs)
+
+# 4. Compute per-position amino acid composition
+comp <- aa_composition(seqs, length_filter = 12L)
+aa_composition_plot(comp)
+```
+
+---
+
+## Functions
+
+| Function | Description |
+|---|---|
+| `read_fasta()` | Parse a FASTA file into a tidy tibble |
+| `extract_cdr3()` | Extract CDR3 regions using conserved flanking motifs |
+| `cdr3_length_dist()` | Bar chart of CDR3 length frequencies |
+| `aa_composition()` | Per-position amino acid frequency table |
+| `aa_composition_plot()` | Heatmap of per-position amino acid composition |
+
+---
+
+## Background
+
+Nanobodies (VHH single-domain antibody fragments) are derived from camelid
+heavy-chain-only antibodies. Their CDR3 region is the primary determinant of
+antigen binding specificity and is typically longer and more structurally
+diverse than conventional antibody CDR3s.
+
+`abseqr` uses conserved Kabat/IMGT boundary motifs — a cysteine (C) on the
+N-terminal side and a WGXG motif on the C-terminal side — to identify CDR3
+regions without requiring sequence alignment.
+
+---
+
+## Vignette
+
+For a full worked example using a panel of 20 example nanobodies, see:
+
+```r
+vignette("nanobody-cdr3-analysis", package = "abseqr")
+```
+
+---
+
+## Author
+
+Sila Zeynep Akyuz — MSc Bioinformatics, University of Copenhagen
+
+---
+
+## License
+
+MIT

@@ -1,0 +1,19 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/nanobody-cdr3-analysis.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/aa_composition.html</loc></url>
+<url><loc>/reference/aa_composition_plot.html</loc></url>
+<url><loc>/reference/abseqr-package.html</loc></url>
+<url><loc>/reference/cdr3_length_dist.html</loc></url>
+<url><loc>/reference/extract_cdr3.html</loc></url>
+<url><loc>/reference/extract_cdr_chothia.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/read_chothia_pdb.html</loc></url>
+<url><loc>/reference/read_fasta.html</loc></url>
+<url><loc>/reference/summarise_cdrs.html</loc></url>
+</urlset>
+
